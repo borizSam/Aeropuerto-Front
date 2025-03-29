@@ -8,12 +8,30 @@ function App() {
   return (
     <Router>
       <CssBaseline />
-      <Header />
-
-      <Box display="flex">
-        <Sidebar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <AppRoutes />
+      <Box
+        sx={{
+          minHeight: "100vh",
+          backgroundColor: (theme) => theme.palette.background.default,
+          color: (theme) => theme.palette.text.primary,
+          transition: "background-color 0.3s ease",
+        }}
+      >
+        <Header />
+        <Box display="flex">
+          <Sidebar />
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              bgcolor: (theme) => theme.palette.background.default,
+              color: (theme) => theme.palette.text.primary,
+              minHeight: "100vh",
+              transition: "background-color 0.3s ease",
+            }}
+          >
+            <AppRoutes />
+          </Box>
         </Box>
       </Box>
     </Router>
@@ -21,3 +39,4 @@ function App() {
 }
 
 export default App;
+

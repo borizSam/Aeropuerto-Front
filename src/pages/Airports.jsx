@@ -1,14 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Typography } from "@mui/material";
 import AirportList from "../components/airports/AirportList";
 import AirportForm from "../components/airports/AirportForm";
+import api from "../services/api";
 
 export default function Airports() {
-  const [refresh, setRefresh] = useState(false);
+  const [airports, setAirports] = useState([]);
 
-  const handleCreated = () => {
-    setRefresh(!refresh); // Cambia el estado para forzar recarga
+  const loadData = () => {
+    api.get("/aeropuertos").then((res) => setAirports(res.data));
   };
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   return (
     <Container>
@@ -16,8 +21,9 @@ export default function Airports() {
         Aeropuertos
       </Typography>
 
-      <AirportForm onCreated={handleCreated} />
-      <AirportList key={refresh} /> {/* vuelve a renderizar cuando cambia refresh */}
+      <AirportForm onCreated={loadData} />
+      <AirportList airports={airports} onDeleted={loadData} />
     </Container>
   );
 }
+
